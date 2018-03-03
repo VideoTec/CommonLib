@@ -3,6 +3,9 @@ package work.wangxiang.commonlibdemo.VideoList;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.reactivex.Observable;
+
+
 /**
  * video list module
  * Created by wangxiang on 2018/3/3.
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class VideoListModel implements VideoListContract.Model {
     @Override
-    public List<VideoBean> getVideoList() {
+    public Observable<List<VideoBean>> getVideoList() {
         List<VideoBean> videos = new LinkedList<>();
         videos.add(new VideoBean(0, "1"));
         videos.add(new VideoBean(0, "2"));
@@ -18,6 +21,6 @@ public class VideoListModel implements VideoListContract.Model {
         videos.add(new VideoBean(0, "4"));
         videos.add(new VideoBean(0, "5"));
         videos.add(new VideoBean(0, "6"));
-        return videos;
+        return Observable.just(videos);
     }
 }
