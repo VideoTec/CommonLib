@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.List;
 
@@ -49,14 +51,16 @@ public class LocalVideoListAdapter extends RecyclerView.Adapter<LocalVideoListAd
         return localVideos == null ? 0 : localVideos.size();
     }
 
-    static class VideoItemView extends RecyclerView.ViewHolder {
+    class VideoItemView extends RecyclerView.ViewHolder {
         private TextView textView;
-        private ImageView imageView;
+        private ImageView ivFromId;
+        private ImageView ivFromPath;
 
         VideoItemView(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_local_video, parent, false));
             textView = itemView.findViewById(R.id.textView);
-            imageView = itemView.findViewById(R.id.imageView);
+            ivFromId = itemView.findViewById(R.id.iv_thumb_from_id);
+            ivFromPath = itemView.findViewById(R.id.iv_thumb_from_path);
         }
 
         @SuppressLint("SetTextI18n")
@@ -64,10 +68,13 @@ public class LocalVideoListAdapter extends RecyclerView.Adapter<LocalVideoListAd
             File thumbFile = new File(videoBean.getThumbPath());
             textView.setText("video id: " + videoBean.getThumbPath() + "; 是否存在: " + thumbFile.exists());
             if (videoBean.getThumb() != null) {
-                imageView.setImageBitmap(videoBean.getThumb());
+                ivFromId.setImageBitmap(videoBean.getThumb());
             } else {
-                imageView.setImageResource(R.mipmap.ic_launcher_round);
+                ivFromId.setImageResource(R.mipmap.ic_launcher_round);
             }
+            Glide.with(LocalVideoListAdapter.this.context)
+                    .load(new File(videoBean.getThumbPath()))
+                    .into(ivFromPath);
             Log.i(TAG, "缩略图ID: " + videoBean.getThumbID() + ": " + videoBean.getThumb());
         }
     }
