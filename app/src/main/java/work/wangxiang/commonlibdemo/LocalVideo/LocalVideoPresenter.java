@@ -1,7 +1,4 @@
-package work.wangxiang.commonlibdemo.VideoList;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+package work.wangxiang.commonlibdemo.LocalVideo;
 
 import java.util.List;
 
@@ -14,20 +11,20 @@ import work.wangxiang.rxmpv.PresenterBase;
  * Created by wangxiang on 2018/3/3.
  */
 
-public class VideoListPresenter
-        extends PresenterBase<VideoListContract.Model, VideoListContract.View>
-        implements VideoListContract.Presenter {
+public class LocalVideoPresenter
+        extends PresenterBase<LocalVideoContract.Model, LocalVideoContract.View>
+        implements LocalVideoContract.Presenter {
     @Override
     public void getVideoList() {
-        model.getVideoList().subscribe(new Observer<List<VideoBean>>() {
+        model.getVideoList().subscribe(new Observer<List<LocalVideoBean>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 addDisposable(d);
             }
 
             @Override
-            public void onNext(List<VideoBean> videoBeans) {
-                view.updateVideoList(videoBeans);
+            public void onNext(List<LocalVideoBean> localVideoBeans) {
+                view.updateVideoList(localVideoBeans);
             }
 
             @Override

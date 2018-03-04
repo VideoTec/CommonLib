@@ -2,13 +2,13 @@ package work.wangxiang.commonlibdemo;
 
 import android.Manifest;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,17 +21,19 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-import work.wangxiang.commonlibdemo.VideoList.VideoBean;
-import work.wangxiang.commonlibdemo.VideoList.VideoListContract;
-import work.wangxiang.commonlibdemo.VideoList.VideoListModel;
-import work.wangxiang.commonlibdemo.VideoList.VideoListPresenter;
+import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoBean;
+import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoContract;
+import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoModel;
+import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoPresenter;
+import work.wangxiang.commonlibdemo.LocalVideo.view.LocalVideoActivity;
+import work.wangxiang.commonlibdemo.LocalVideo.view.LocalVideoListAdapter;
 import work.wangxiang.rxmpv.PresenterHolder;
 
 public class DemoActivity extends AppCompatActivity
-        implements VideoListContract.View {
+        implements LocalVideoContract.View {
 
     private static final String TAG = "DemoActivity";
-    private PresenterHolder<VideoListModel, VideoListPresenter> presenterHolder;
+    private PresenterHolder<LocalVideoModel, LocalVideoPresenter> presenterHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,10 @@ public class DemoActivity extends AppCompatActivity
         recyclerViewLyMgr = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(recyclerViewLyMgr);
 
-        recyclerViewAdapter = new MyAdapter();
+        recyclerViewAdapter = new LocalVideoListAdapter(this);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        presenterHolder = new PresenterHolder<VideoListModel, VideoListPresenter>(this){};
+        presenterHolder = new PresenterHolder<LocalVideoModel, LocalVideoPresenter>(this){};
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +57,9 @@ public class DemoActivity extends AppCompatActivity
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
-                presenterHolder.presenter().getVideoList();
+                //presenterHolder.presenter().getVideoList();
+                DemoActivity.this.startActivity(
+                        new Intent(DemoActivity.this, LocalVideoActivity.class));
             }
         });
 
@@ -123,8 +127,8 @@ public class DemoActivity extends AppCompatActivity
     private RecyclerView.LayoutManager recyclerViewLyMgr;
 
     @Override
-    public void updateVideoList(List<VideoBean> videos) {
-        for (VideoBean v : videos) {
+    public void updateVideoList(List<LocalVideoBean> videos) {
+        for (LocalVideoBean v : videos) {
             Log.i(TAG, v.getVideoPath());
         }
     }

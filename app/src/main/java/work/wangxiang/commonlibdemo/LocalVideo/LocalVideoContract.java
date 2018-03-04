@@ -1,4 +1,4 @@
-package work.wangxiang.commonlibdemo.VideoList;
+package work.wangxiang.commonlibdemo.LocalVideo;
 
 import java.util.List;
 
@@ -9,12 +9,12 @@ import io.reactivex.Observable;
  * Created by wangxiang on 2018/3/3.
  */
 
-public class VideoListContract {
+public class LocalVideoContract {
     public interface Model {
-        Observable<List<VideoBean>> getVideoList();
+        Observable<List<LocalVideoBean>> getVideoList();
     }
     public interface View {
-        void updateVideoList(List<VideoBean> videos);
+        void updateVideoList(List<LocalVideoBean> videos);
     }
     public interface Presenter {
         void getVideoList();

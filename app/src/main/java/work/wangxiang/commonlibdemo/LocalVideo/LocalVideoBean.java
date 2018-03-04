@@ -1,4 +1,4 @@
-package work.wangxiang.commonlibdemo.VideoList;
+package work.wangxiang.commonlibdemo.LocalVideo;
 
 import android.graphics.Bitmap;
 
@@ -7,12 +7,12 @@ import android.graphics.Bitmap;
  * Created by wangxiang on 2018/2/28.
  */
 
-public class VideoBean {
+public class LocalVideoBean {
     private long videoID;
     private String videoPath;
     private Bitmap thumb;
 
-    public VideoBean(long id, String path) {
+    public LocalVideoBean(long id, String path) {
         this.videoID = id;
         this.videoPath = path;
         this.thumb = null;
