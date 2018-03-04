@@ -14,12 +14,14 @@ public class LocalVideoBean {
     private long videoID;
     private long thumbID;
     private String videoPath;
+    private String thumbPath;
     private Bitmap thumb;
 
-    LocalVideoBean(long videoID, long thumbID, String path) {
+    LocalVideoBean(long videoID, long thumbID, String videoPath, String thumbPath) {
         this.videoID = videoID;
         this.thumbID = thumbID;
-        this.videoPath = path;
+        this.videoPath = videoPath;
+        this.thumbPath = thumbPath;
         this.thumb = null;
     }
 
@@ -45,6 +47,14 @@ public class LocalVideoBean {
 
     public void setVideoPath(String videoPath) {
         this.videoPath = videoPath;
+    }
+
+    public String getThumbPath() {
+        return thumbPath;
+    }
+
+    public void setThumbPath(String thumbPath) {
+        this.thumbPath = thumbPath;
     }
 
     public Bitmap getThumb() {

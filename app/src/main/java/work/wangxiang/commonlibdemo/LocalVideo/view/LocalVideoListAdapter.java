@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoBean;
@@ -60,7 +61,8 @@ public class LocalVideoListAdapter extends RecyclerView.Adapter<LocalVideoListAd
 
         @SuppressLint("SetTextI18n")
         void bind(LocalVideoBean videoBean) {
-            textView.setText("video id: " + videoBean.getThumbID());
+            File thumbFile = new File(videoBean.getThumbPath());
+            textView.setText("video id: " + videoBean.getThumbPath() + "; 是否存在: " + thumbFile.exists());
             if (videoBean.getThumb() != null) {
                 imageView.setImageBitmap(videoBean.getThumb());
             } else {
