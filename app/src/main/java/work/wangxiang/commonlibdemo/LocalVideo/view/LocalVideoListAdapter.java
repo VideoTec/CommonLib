@@ -1,5 +1,6 @@
 package work.wangxiang.commonlibdemo.LocalVideo.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoBean;
 import work.wangxiang.commonlibdemo.R;
 
 /**
@@ -16,9 +20,14 @@ import work.wangxiang.commonlibdemo.R;
 
 public class LocalVideoListAdapter extends RecyclerView.Adapter<LocalVideoListAdapter.VideoItemView> {
     private Context context;
+    private List<LocalVideoBean> localVideos;
 
     public LocalVideoListAdapter(Context ctx) {
         context = ctx;
+    }
+
+    public void setLocalVideos(List<LocalVideoBean> videos) {
+        localVideos = videos;
     }
 
     @Override
@@ -28,12 +37,12 @@ public class LocalVideoListAdapter extends RecyclerView.Adapter<LocalVideoListAd
 
     @Override
     public void onBindViewHolder(VideoItemView holder, int position) {
-        holder.bind(dataSet[position]);
+        holder.bind(localVideos.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.length;
+        return localVideos == null ? 0 : localVideos.size();
     }
 
     static class VideoItemView extends RecyclerView.ViewHolder {
@@ -44,12 +53,9 @@ public class LocalVideoListAdapter extends RecyclerView.Adapter<LocalVideoListAd
             textView = (TextView) itemView.findViewById(R.id.textView);
         }
 
-        void bind(String text) {
-            textView.setText(text);
+        @SuppressLint("SetTextI18n")
+        void bind(LocalVideoBean videoBean) {
+            textView.setText("video id: " + videoBean.getVideoID());
         }
     }
-
-    private static String[] dataSet = new String[]{
-            "first","second","3","four","five"
-    };
 }

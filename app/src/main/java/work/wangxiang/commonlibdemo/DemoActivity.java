@@ -11,29 +11,16 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.List;
-
-import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoBean;
-import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoContract;
-import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoModel;
-import work.wangxiang.commonlibdemo.LocalVideo.LocalVideoPresenter;
 import work.wangxiang.commonlibdemo.LocalVideo.view.LocalVideoActivity;
-import work.wangxiang.commonlibdemo.LocalVideo.view.LocalVideoListAdapter;
-import work.wangxiang.rxmpv.PresenterHolder;
 
-public class DemoActivity extends AppCompatActivity
-        implements LocalVideoContract.View {
+public class DemoActivity extends AppCompatActivity  {
 
     private static final String TAG = "DemoActivity";
-    private PresenterHolder<LocalVideoModel, LocalVideoPresenter> presenterHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +28,6 @@ public class DemoActivity extends AppCompatActivity
         setContentView(R.layout.activity_demo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        recyclerViewLyMgr = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(recyclerViewLyMgr);
-
-        recyclerViewAdapter = new LocalVideoListAdapter(this);
-        recyclerView.setAdapter(recyclerViewAdapter);
-
-        presenterHolder = new PresenterHolder<LocalVideoModel, LocalVideoPresenter>(this){};
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,21 +45,6 @@ public class DemoActivity extends AppCompatActivity
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        } else {
-            Cursor cr = getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI,
-                    new String[]{MediaStore.Video.Thumbnails.DATA, MediaStore.Video.Thumbnails.VIDEO_ID},
-                    null, null, null);
-            if (cr != null) {
-                Log.i(TAG, "video thumbnails count: " + cr.getCount());
-                if (cr.moveToFirst()) {
-                    for (int i = 0; i < cr.getCount(); i++) {
-                        Log.i(TAG, cr.getString(0));
-                        Log.i(TAG, "video: " + mediaStoreVideoPath(cr.getLong(1)));
-                        cr.moveToNext();
-                    }
-                }
-                cr.close();
-            }
         }
     }
 
@@ -120,16 +83,5 @@ public class DemoActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter recyclerViewAdapter;
-    private RecyclerView.LayoutManager recyclerViewLyMgr;
-
-    @Override
-    public void updateVideoList(List<LocalVideoBean> videos) {
-        for (LocalVideoBean v : videos) {
-            Log.i(TAG, v.getVideoPath());
-        }
     }
 }

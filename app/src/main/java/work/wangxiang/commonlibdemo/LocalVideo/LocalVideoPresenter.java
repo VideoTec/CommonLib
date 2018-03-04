@@ -1,5 +1,7 @@
 package work.wangxiang.commonlibdemo.LocalVideo;
 
+import android.util.Log;
+
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -17,10 +19,13 @@ import work.wangxiang.rxmpv.PresenterBase;
 public class LocalVideoPresenter
         extends PresenterBase<LocalVideoContract.Model, LocalVideoContract.View>
         implements LocalVideoContract.Presenter {
+    private static final String TAG = "LocalVideoPresenter";
+
     @Override
     public void getVideoList() {
         model.getVideoList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<LocalVideoBean>>() {
+
                     @Override
                     public void onSubscribe(Disposable d) {
                         addDisposable(d);
@@ -33,7 +38,7 @@ public class LocalVideoPresenter
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "获取本地视频列表异常", e);
                     }
 
                     @Override
